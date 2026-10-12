@@ -1,4 +1,4 @@
-const publicRoutes = ["/login", "/register", "/"];
+const publicRoutes = ["/login", "/register", "/signup", "/"];
 
 export default defineNuxtRouteMiddleware((to) => {
   const token = useCookie<string | null>("token");
