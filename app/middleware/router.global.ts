@@ -1,9 +1,14 @@
 const publicRoutes = ["/login", "/register", "/signup", "/"];
 
-export default defineNuxtRouteMiddleware((to) => {
-  const token = useCookie<string | null>("token");
+export default defineNuxtRouteMiddleware(async (to) => {
+  if (publicRoutes.includes(to.path)) return;
 
-  if (!token.value && !publicRoutes.includes(to.path)) {
+  const requestFetch = useRequestFetch();
+  const { authenticated } = await requestFetch<{
+    authenticated: boolean;
+  }>("/api/auth/session");
+
+  if (!authenticated) {
     return navigateTo({
       path: "/login",
       query: { redirect: to.fullPath },
