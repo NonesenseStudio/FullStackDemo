@@ -103,15 +103,26 @@ const tableColumns = computed<TableColumn<TableRow>[]>(() => [
       const indicatorClass = sorted
         ? "text-muted"
         : "text-muted opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100";
-      return h(UButton, {
-        type: "button",
-        color: "neutral",
-        variant: "ghost",
-        size: "sm",
-        class: "group -mx-2.5",
-        "aria-label": `按${column.title}${nextDirection}排列`,
-        onClick: () => tableColumn.toggleSorting(sorted === "asc"),
-      }, () => [column.title, h("span", { "aria-hidden": "true", class: indicatorClass }, indicator)]);
+      return h(
+        UButton,
+        {
+          type: "button",
+          color: "neutral",
+          variant: "ghost",
+          size: "sm",
+          class: "group -mx-2.5",
+          "aria-label": `按${column.title}${nextDirection}排列`,
+          onClick: () => tableColumn.toggleSorting(sorted === "asc"),
+        },
+        () => [
+          column.title,
+          h(
+            "span",
+            { "aria-hidden": "true", class: indicatorClass },
+            indicator,
+          ),
+        ],
+      );
     },
   })),
   ...(props.showActions
